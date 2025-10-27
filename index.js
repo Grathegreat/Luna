@@ -1,28 +1,18 @@
 const { spawn } = require("child_process");
-const { readFileSync } = require("fs-extra");
-const http = require("http");
-const axios = require("axios");
-const semver = require("semver");
 const logger = require("./utils/log");
-const path = require('path');
 
-///////////////////////////////////////////////////////////
-//========= Create website for dashboard/uptime =========//
-///////////////////////////////////////////////////////////
-const PORT = process.env.PORT || 2025;
+const PORT = process.env.PORT || 5000;
 const express = require("express");
 const app = express();
 
-// Define a route
-app.get('/', (request, response) => {
-    const result = `Nhớ ib Facebook Lương Trường Khôi để cập nhật file nha (free) Facebook: https://facebook.com/Khoi.Meta`;
-    response.send(result);
-});
-// Start the server
-app.listen(PORT, () => {
-    console.log(`[ SECURITY ] -> Máy chủ khởi động tại port: ${PORT}`);
+app.get('/', (req, res) => {
+    const result = `Lunar Krystal Bot - Facebook: https://facebook.com/LunarKrystal.Dev`;
+    res.send(result);
 });
 
+app.listen(PORT, () => {
+    console.log(`[ SECURITY ] -> Server started on port: ${PORT}`);
+});
 
 function startBot(message) {
     (message) ? logger(message, "BOT STARTING") : "";
@@ -35,7 +25,7 @@ function startBot(message) {
 
    child.on("close",async (codeExit) => {
       var x = 'codeExit'.replace('codeExit',codeExit);
-        if (codeExit == 1) return startBot("Đang Khởi Động Lại, Vui Lòng Chờ ...");
+        if (codeExit == 1) return startBot("Restarting bot, please wait...");
          else if (x.indexOf(2) == 0) {
            await new Promise(resolve => setTimeout(resolve, parseInt(x.replace(2,'')) * 1000));
                  startBot("Bot has been activated please wait a moment!!!");
@@ -47,6 +37,4 @@ function startBot(message) {
         logger("An error occurred: " + JSON.stringify(error), "[ Starting ]");
     });
 };
-
-axios.get("https://raw.githubusercontent.com/tandung1/Bot12/main/package.json").then((res) => {})
 startBot()

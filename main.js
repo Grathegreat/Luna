@@ -1,6 +1,3 @@
-//////////////////////////////////////////////////////
-//========= Require all variable need use =========//
-/////////////////////////////////////////////////////
 const moment = require("moment-timezone");
 const { readdirSync, readFileSync, writeFileSync, existsSync, unlinkSync, rm } = require("fs-extra");
 const { join, resolve } = require("path");
@@ -8,12 +5,11 @@ const chalk = require('chalk');
 const figlet = require('figlet');
 const { execSync } = require('child_process');
 const logger = require("./utils/log.js");
-// const login = require("fca-horizon-remastered"); 
 const login = require("./includes/fca");
 const axios = require("axios");
 const listPackage = JSON.parse(readFileSync('./package.json')).dependencies;
 const listbuiltinModules = require("module").builtinModules;
-
+const connect = require("./includes/ConnectApi.js");
 
 global.client = new Object({
     commands: new Map(),
@@ -28,23 +24,23 @@ global.client = new Object({
   getTime: function (option) {
         switch (option) {
             case "seconds":
-                return `${moment.tz("Asia/Ho_Chi_minh").format("ss")}`;
+                return `${moment.tz("Asia/Manila").format("ss")}`;
             case "minutes":
-                return `${moment.tz("Asia/Ho_Chi_minh").format("mm")}`;
+                return `${moment.tz("Asia/Manila").format("mm")}`;
             case "hours":
-                return `${moment.tz("Asia/Ho_Chi_minh").format("HH")}`;
+                return `${moment.tz("Asia/Manila").format("HH")}`;
             case "date": 
-                return `${moment.tz("Asia/Ho_Chi_minh").format("DD")}`;
+                return `${moment.tz("Asia/Manila").format("DD")}`;
             case "month":
-                return `${moment.tz("Asia/Ho_Chi_minh").format("MM")}`;
+                return `${moment.tz("Asia/Manila").format("MM")}`;
             case "year":
-                return `${moment.tz("Asia/Ho_Chi_minh").format("YYYY")}`;
+                return `${moment.tz("Asia/Manila").format("YYYY")}`;
             case "fullHour":
-                return `${moment.tz("Asia/Ho_Chi_minh").format("HH:mm:ss")}`;
+                return `${moment.tz("Asia/Manila").format("HH:mm:ss")}`;
             case "fullYear":
-                return `${moment.tz("Asia/Ho_Chi_minh").format("DD/MM/YYYY")}`;
+                return `${moment.tz("Asia/Manila").format("DD/MM/YYYY")}`;
             case "fullTime":
-                return `${moment.tz("Asia/Ho_Chi_minh").format("HH:mm:ss DD/MM/YYYY")}`;
+                return `${moment.tz("Asia/Manila").format("HH:mm:ss DD/MM/YYYY")}`;
         }
   }
 });
@@ -74,10 +70,6 @@ global.moduleData = new Array();
 
 global.language = new Object();
 
-//////////////////////////////////////////////////////////
-//========= Find and get variable from Config =========//
-/////////////////////////////////////////////////////////
-
 var configValue;
 try {
     global.client.configPath = join(global.client.mainPath, "config.json");
@@ -101,10 +93,6 @@ const { Sequelize, sequelize } = require("./includes/database");
 
 writeFileSync(global.client.configPath + ".temp", JSON.stringify(global.config, null, 4), 'utf8');
 
-/////////////////////////////////////////
-//========= Load language use =========//
-/////////////////////////////////////////
-
 const langFile = (readFileSync(`${__dirname}/languages/${global.config.language || "en"}.lang`, { encoding: 'utf-8' })).split(/\r?\n|\r/);
 const langData = langFile.filter(item => item.indexOf('#') != 0 && item != '');
 for (const item of langData) {
@@ -120,7 +108,7 @@ for (const item of langData) {
 
 global.getText = function (...args) {
     const langText = global.language;    
-    if (!langText.hasOwnProperty(args[0])) throw `${__filename} - Không tìm thấy ngôn ngữ chính: ${args[0]}`;
+    if (!langText.hasOwnProperty(args[0])) throw `${__filename} - Language key not found: ${args[0]}`;
     var text = langText[args[0]][args[1]];
     for (var i = args.length - 1; i > 0; i--) {
         const regEx = RegExp(`%${i}`, 'g');
@@ -135,13 +123,8 @@ try {
 }
 catch { return logger.loader(global.getText("mirai", "notFoundPathAppstate"), "error") }
 
-////////////////////////////////////////////////////////////
-//========= Login account and start Listen Event =========//
-////////////////////////////////////////////////////////////
-
-
 function onBot({ models: botModel }) {
-    console.log(chalk.yellow(figlet.textSync('START BOT', { horizontalLayout: 'full' })));
+    console.log(chalk.yellow(figlet.textSync('THE END', { horizontalLayout: 'full' })));
     const loginData = {};
     loginData['appState'] = appState;
     login(loginData, async(loginError, loginApiData) => {
@@ -278,7 +261,7 @@ function onBot({ models: botModel }) {
                 }
             }()
         logger.loader(global.getText('mirai', 'finishLoadModule', global.client.commands.size, global.client.events.size)) 
-        logger.loader(`Thời gian khởi động: ${((Date.now() - global.client.timeStart) / 1000).toFixed()}s`)   
+        logger.loader(`Startup time: ${((Date.now() - global.client.timeStart) / 1000).toFixed()}s`)   
         logger.loader('===== [ ' + (Date.now() - global.client.timeStart) + 'ms ] =====')
         writeFileSync(global.client['configPath'], JSON['stringify'](global.config, null, 4), 'utf8') 
         unlinkSync(global['client']['configPath'] + '.temp');        
@@ -299,9 +282,9 @@ function onBot({ models: botModel }) {
                 };
                 api.httpPost("https://www.facebook.com/api/graphql/", form, (e, i) => {
                   const res = JSON.parse(i);
-                  if (e || res.errors) return logger("Lỗi không thể xóa cảnh cáo của facebook.", "error");
+                  if (e || res.errors) return logger("Error: Cannot remove Facebook warning.", "error");
                   if (res.data.fb_scraping_warning_clear.success) {
-                    logger("Đã vượt cảnh cáo facebook thành công.", "[ SUCCESS ] >");
+                    logger("Successfully bypassed Facebook warning.", "[ SUCCESS ] >");
                     global.handleListen = api.listenMqtt(listenerCallback);
                     setTimeout(() => (mqttClient.end(), connect_mqtt()), 1000 * 60 * 60 * 6);
                   }
@@ -314,12 +297,6 @@ function onBot({ models: botModel }) {
             if (global.config.DeveloperMode) console.log(event);
             return listener(event);
           }
-        // function listenerCallback(error, message) {
-        //     if (error) return logger(global.getText('mirai', 'handleListenError', JSON.stringify(error)), 'error');
-        //     if (['presence', 'typ', 'read_receipt'].some(data => data == message.type)) return;
-        //     if (global.config.DeveloperMode == !![]) console.log(message);
-        //     return listener(message);
-        // };
         global.handleListen = loginApiData.listenMqtt(listenerCallback);
         try {
         } catch (error) {
@@ -329,10 +306,6 @@ function onBot({ models: botModel }) {
 
     });
 }
-//////////////////////////////////////////////
-//========= Connecting to Database =========//
-//////////////////////////////////////////////
-
 (async () => {
     try {
         try {
@@ -358,7 +331,6 @@ function onBot({ models: botModel }) {
                 modelName: "antists"
             });
 
-            // connect to database
             dataModel.findOneAndUpdate = async function (filter, update) {
                 const doc = await this.findOne({
           where: filter  
@@ -371,10 +343,9 @@ function onBot({ models: botModel }) {
             }
             global.modelAntiSt = dataModel;
             await sequelize2.sync({ force: false });
-        }
-        catch (error) {
+        } catch (error) {
             global.client.loggedMongoose = false;
-            logger.loader('Không thể kết nối dữ liệu ANTI SETTING', '[ CONNECT ]');
+            logger.loader('Cannot connect to ANTI SETTING data', '[ CONNECT ]');
             console.log(error);
         }
 

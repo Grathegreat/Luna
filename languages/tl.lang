@@ -1,0 +1,103 @@
+# Kung gusto mong pumunta sa bagong linya, gamitin ang \n.
+# Pagkatapos ng pagbabago, kailangan mong i-restart ang bot para gumana.
+# Lagyan ng # sa simula ng bawat linya kung ayaw mong tumakbo ang code.
+
+# mirai.js
+
+mirai.errorFormat=Mali ang format ng module!
+mirai.nameExist=Ang pangalan ng module ay pareho sa ibang module!
+mirai.notFoundLanguage=Hindi sinusuportahan ng module %1 ang iyong wika
+mirai.notFoundPackage=Hindi mahanap ang package %1 para sa module %2, ini-install...
+mirai.cantInstallPackage=Hindi ma-install ang package %1 para sa module %2, error: %3
+mirai.loadedPackage=Matagumpay na na-install ang lahat ng package para sa module %1
+mirai.loadedConfig=Matagumpay na na-load ang config para sa module %1
+mirai.cantLoadConfig=Hindi ma-load ang config ng module %1, error: %2
+mirai.cantOnload=Hindi masimulan ang setup ng module %1, error: %2
+mirai.successLoadModule=Matagumpay na na-load ang module %1
+mirai.failLoadModule=Hindi ma-load ang module %1, error: %2
+mirai.finishLoadModule=Matagumpay na na-load ang %1 command modules at %2 event modules
+mirai.foundPathAppstate=Nahanap ang appstate file
+mirai.notFoundPathAppstate=Hindi mahanap ang appstate file
+mirai.checkListGban=Sinusuri ang global ban list...
+mirai.banDevice=Ang iyong device ay na-ban na. Mangyaring makipag-ugnayan sa Facebook para sa impormasyon.
+mirai.keyNotSameFormat=Mali ang format, dapat 6 na numero ang code!
+mirai.codeInputExpired=Mali ang code o nag-expire na.
+mirai.unbanDeviceSuccess=Na-unban na ang iyong device, mangyaring mag-restart.
+mirai.userBanned=Na-ban ka noong %1 dahil sa: %2. Makipag-ugnayan sa admin para sa karagdagang impormasyon!
+mirai.finishCheckListGban=Natapos na ang pagsusuri ng global ban list
+mirai.handleListenError=May error sa handleListener, error: %1
+mirai.warningSourceCode=BOT UPDATE COMPLETE!!!
+mirai.refreshListen=Na-refresh ang handleListener...
+mirai.successConnectDatabase=Matagumpay na nakakonekta sa database!!
+mirai.failConnectDatabase=Hindi makakonekta sa database, error: %1
+
+# includes/listen.js
+
+listen.startLoadEnvironment=Nagsisimula ng load ng bot structure!
+listen.loadedEnvironmentThread=Matagumpay na na-load ang thread structure!
+listen.loadedEnvironmentUser=Matagumpay na na-load ang user structure!
+listen.successLoadEnvironment=Matagumpay na na-load ang bot structure!!!
+listen.failLoadEnvironment=Hindi ma-load ang bot structure, error: %1
+
+# includes/controller/currencies.js
+
+currencies.needObjectOrArray=Dapat ay Array o Object o pareho
+currencies.needObject=Dapat ay Object
+currencies.needNumber=Dapat ay numero
+
+# includes/controller/threads.js
+
+threads.needObjectOrArray=Dapat ay Array o Object o pareho
+threads.needObject=Dapat ay Object
+
+# includes/controller/users.js
+
+users.needObjectOrArray=Dapat ay Array o Object o pareho
+users.needObject=Dapat ay Object
+
+# includes/handle/handleCommand.js
+
+handleCommand.userBanned=Hindi ka makakagamit ng bot!\nPakiusap makipag-ugnayan sa admin.\nDahilan: %1\nPetsa: %2
+handleCommand.threadBanned=Ang iyong group ay hindi makakagamit ng bot!\nPakiusap makipag-ugnayan sa admin.\n%1\n%2
+handleCommand.commandNotExist=Kumusta!\nAko ay bot, mukhang mali ang iyong command o hindi ito umiiral.\n\nNahanap namin ang katulad na command: "%1".
+handleCommand.commandThreadBanned=Ang iyong group ay na-ban sa command "%1"\nMakipag-ugnayan sa admin.
+handleCommand.commandUserBanned=Na-ban ka sa command "%1"\nMakipag-ugnayan sa admin.
+handleCommand.threadNotAllowNSFW=Ang iyong group ay hindi pinapayagan gumamit ng NSFW commands
+handleCommand.cantGetInfoThread=Hindi makuha ang info ng group, error: %1
+handleCommand.permssionNotEnough=Walang sapat na permission para gamitin ang command "%1". Admin lang po ang pwede!!!
+handleCommand.cantSetMessageReaction=May error sa setMessageReaction, error: %1
+handleCommand.notFoundLanguage=Hindi nahanap ang wika para sa module %1
+handleCommand.executeCommand=» %1 « Command: %2 | User: %3 | Group: %4 | Args: %5 | Time: %6ms
+handleCommand.commandError=May error sa command %1, error: %2
+
+# includes/handle/handleCommandEvent.js
+
+handleCommandEvent.moduleError=May error sa command %1, error: %2
+
+# includes/handle/handleCreateDatabase.js
+
+handleCreateDatabase.newThread=THREAD ID » %1
+handleCreateDatabase.newUser=USER ID » %1
+
+# includes/handle/handleEvent.js
+
+handleEvent.executeEvent=» %1 « Event: %2 | Group: %3 | Time: %4ms
+handleEvent.eventError=May error sa event %1, error: %2
+
+# includes/handle/handleReaction.js
+
+handleReaction.missingValue=Kulang ang data para mag-execute ng reaction
+handleReaction.executeError=May error sa reaction, error: %1
+
+# includes/handle/handleReply.js
+
+handleReply.missingValue=Kulang ang data para mag-execute ng reply
+handleReply.executeError=May error sa reply, error: %1
+
+# includes/handle/handleSchedule.js
+
+handleSchedule.exectuteError=May error sa schedule ng module %1, error: %2
+
+# utils/index.js
+
+utils.throwError=» Mali ang paggamit ng command, mangyaring gamitin ang %1help %2 para sa gabay.\nKung hindi mo maintindihan, makipag-ugnayan sa admin.\nSalamat!
