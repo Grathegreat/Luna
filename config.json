@@ -5,7 +5,7 @@
     "MAINTENANCE_MODE": false,
     "iconUnsend": {
         "status": true,
-        "icon": "❤"
+        "icon": "👽"
     },
     "notiGroup": false,
     "NOTIFICATION": true,
@@ -14,15 +14,16 @@
     "eventDisabled": [],
     "autoClean": true,
     "ACCESSTOKEN": "",
-    "BOTNAME": "Lunar Krystal Bot",
-    "AMDIN_NAME": "Thank you",
-    "FACEBOOK_ADMIN": "https://www.facebook.com/100018277053087",
-    "PREFIX": "/",
+    "BOTNAME": "Luna",
+    "AMDIN_NAME": "Mot Mot Oyamat 👽",
+    "FACEBOOK_ADMIN": "https://www.facebook.com/61569790299591",
+    "PREFIX": "*",
     "ADMINBOT": [
-        "100018277053087"
+        "61569790299591",
+        "61582332604814"
     ],
     "NDH": [
-        "100018277053087"
+        "61569790299591"
     ],
     "DATABASE": {
         "sqlite": {
